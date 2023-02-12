@@ -9,17 +9,18 @@ class MRWordFreqCount(MRJob):
     def steps(self):
         return [
             MRStep(
-                mapper=self.mapper_country,
-                reducer=self.reducer_country
+                mapper=self.mapper_benda,
+                reducer=self.reducer_benda
             )
         ]
         
-    def mapper_country(self, _, line):
+    def mapper_benda(self, _, line):
         for word in WORD_RE.findall(line):
             yield (word.lower(), 1)
 
-    def reducer_country(self, word, counts):
+    def reducer_benda(self, word, counts):
         yield (word, sum(counts))
 
 if __name__ == '__main__':
     MRWordFreqCount.run()
+
